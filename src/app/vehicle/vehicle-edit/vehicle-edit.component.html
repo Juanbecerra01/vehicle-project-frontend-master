@@ -1,0 +1,141 @@
+<form [formGroup]="vehicleForm" (ngSubmit)="onSubmit()">
+<div class="row" style="border: 1px solid lightgray; padding: 20px;">
+    <div class="row">
+      <div class="col-xs-12 col-md-6">
+        <div class="form-group">
+          <label for="year">Year</label>
+          <input type="number" class="form-control"  id="year" formControlName="year">
+          <span
+            *ngIf="(vehicleForm.get('year').touched) && vehicleForm.get('year').invalid"
+            style="color: red">
+            Year is required</span>
+          <br>
+          <label for="model">Model</label>
+          <input type="text" class="form-control"  id="model" formControlName="model">
+          <span
+            *ngIf="(vehicleForm.get('model').touched) && vehicleForm.get('model').invalid"
+            style="color: red">
+            Model is required</span>
+          <br>
+          <label for="numOfDoors">Number of Doors</label>
+          <input type="number" class="form-control"  id="numOfDoors" formControlName="numOfDoors">
+          <span
+            *ngIf="(vehicleForm.get('numOfDoors').touched) && vehicleForm.get('numOfDoors').invalid"
+            style="color: red">
+            Number of Doors is required</span>
+        </div>
+      </div>
+      <div class="col-xs-12 col-md-6">
+        <div class="form-group">
+          <label for="make">Make</label>
+          <input type="text" id="make" class="form-control" formControlName="make">
+          <span
+            *ngIf="(vehicleForm.get('make').touched) && vehicleForm.get('make').invalid"
+            style="color: red">
+            Make is required</span>
+          <br>
+          <label for="type">Vehicle Type</label>
+
+          <select [(ngModel)]="selectedValue"
+                  (change)="selectChangeHandler($event)"
+                  id="type"
+                  class="form-control"
+                  formControlName="type"
+                  [disabled]="editMode">
+
+            <option [ngValue]="null" disabled>Choose...</option>
+            <option
+              *ngFor="let type of vehicleTypes"
+              [ngValue]="type">
+              {{ type }}</option>
+          </select>
+          <span
+            *ngIf="(vehicleForm.get('type').touched) && vehicleForm.get('type').invalid"
+            style="color: red">
+            Vehicle type is required</span>
+          <br>
+          <label for="status">Status</label>
+          <input type="text" class="form-control"  id="status" formControlName="status">
+          <span
+            *ngIf="(vehicleForm.get('status').touched) && vehicleForm.get('status').invalid"
+            style="color: red">
+            Status is required</span>
+        </div>
+      </div>
+
+      <div class="col-xs-12">
+        <div class="from-group">
+          <label for="price">Price</label>
+          <input type="text" id="price" class="form-control" formControlName="price">
+          <span
+            *ngIf="(vehicleForm.get('price').touched) && vehicleForm.get('price').invalid"
+            style="color: red">
+            Price is required</span>
+          <br>
+          <label for="tow" *ngIf="selectedValue === 'SUV'">Towing Capacity</label>
+          <input *ngIf="selectedValue === 'SUV'" type="text" id="tow" class="form-control" formControlName="towingCapacity">
+          <br *ngIf="selectedValue === 'SUV'">
+        </div>
+      </div>
+
+        <div class="col-xs-12 col-md-6" *ngIf="selectedValue === 'VAN' || selectedValue === 'BUS';" >
+          <div class="form-group">
+            <label for="numOfSeats">Number of Seats</label>
+            <input type="number" class="form-control" id="numOfSeats" formControlName="numOfSeats">
+          </div>
+        </div>
+
+      <div class="col-xs-12 col-md-6" *ngIf="selectedValue === 'VAN' || selectedValue === 'BUS';">
+        <div class="form-group">
+          <label for="license">Driver's License Required</label>
+          <input type="text" class="form-control" id="license" formControlName="licenseType">
+        </div>
+      </div>
+
+      <div class="col-xs-12">
+        <div class="from-group">
+          <label for="imagePath">Image URL</label>
+          <input type="text" id="imagePath" class="form-control" formControlName="imagePath" #imageUrl>
+          <span
+            *ngIf="(vehicleForm.get('imagePath').touched) && vehicleForm.get('imagePath').invalid"
+            style="color: red">
+            Image URL is required</span>
+          <br>
+        </div>
+      </div>
+
+      <div class="col-xs-12">
+        <label>Image Preview</label>
+        <img [src]="imageUrl.value" class="img-responsive">
+        <br>
+      </div>
+      <div class="col-xs-12">
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea
+            id="description"
+            class="form-control"
+            rows="6"
+            formControlName="description"></textarea>
+          <span
+            *ngIf="(vehicleForm.get('description').touched) && vehicleForm.get('description').invalid"
+            style="color: red">
+            Description is required</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12" style="text-align: center;">
+        <hr>
+        <button
+          type="submit"
+          class="btn btn-success"
+          style="margin-right: 10px;"
+          [disabled]="!vehicleForm.valid"
+          >{{editMode ? 'Update' : 'Add'}}</button>
+        <button type="button" class="btn btn-danger" (click)="onCancel()">Cancel</button>
+      </div>
+    </div>
+</div>
+</form>

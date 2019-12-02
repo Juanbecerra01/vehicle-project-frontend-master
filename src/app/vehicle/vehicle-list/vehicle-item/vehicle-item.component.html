@@ -1,0 +1,21 @@
+<a
+  style="cursor: pointer"
+  [routerLink]="[index]"
+  routerLinkActive="active"
+  class="list-group-item clearfix">
+
+  <div class="pull-left">
+    <h4 class="list-group-item-heading">{{vehicle.year}} {{ vehicle.make }} {{ vehicle.model }}</h4>
+    <p class="list-group-item-text">${{ vehicle.price }}/hr.</p>
+    <p class="list-group-item-text">Status:
+      <span
+        [ngStyle]="{color: getColor()}"
+        >
+      {{ vehicle.status }}</span></p>
+  </div>
+  <span class="pull-right">
+    <img
+      class="img-responsive"
+      src="{{ vehicle.imgPath }}"
+      style="max-height: 50px">
+  </span></a>
