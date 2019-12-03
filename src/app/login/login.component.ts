@@ -29,6 +29,7 @@ export class LoginComponent implements OnInit {
     this.userService.loginUser(user).subscribe(response => {
       if (response){
         if(response.token){
+          console.log(response.token);
           localStorage.setItem('currentUser', JSON.stringify(response));
           if (response.user.role === 'EMPLOYEE'){
             this.router.navigate(['/vehicles'])

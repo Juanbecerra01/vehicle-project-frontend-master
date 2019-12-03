@@ -1,5 +1,5 @@
 import {Vehicle} from './vehicle.model';
-import {Injectable} from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import {Sedan} from './entity/sedan.model';
 import {Subject} from 'rxjs';
 import {PostsService} from '../posts.service';
@@ -8,18 +8,27 @@ import {Hatch} from './entity/hatch.model';
 import {Van} from './entity/van.model';
 import {Bus} from './entity/bus.model';
 import {Suv} from './entity/suv.model';
+import { LoginAuthService } from '../login-auth.service';
+import { JsonPipe } from '@angular/common';
 
 @Injectable({providedIn: 'root'})
-export class VehicleService {
-
+export class VehicleService implements OnInit{
+  public loginUser: any = {};
+  public users: any = {};
   vehiclesChanged = new Subject<Vehicle[]>();
   private vehicles: Vehicle[] = [];
 
-  constructor(private postsService: PostsService){}
+  ngOnInit(){
+    
+  }
+  constructor(private postsService: PostsService, private loginAuthService: LoginAuthService){
+    this.loginAuthService.isLoggedIN;
+    this.loginUser = JSON.parse(localStorage.getItem('currentUser'));
+  }
 
   getVehiclesRest(){
     let temp: Vehicle[] = [];
-    this.postsService.fetchPosts().toPromise().then(data => {
+    this.postsService.fetchPosts(this.loginUser.token).toPromise().then(data => {
       for (let v of data){
         let vType = v.VEH_TYPE;
         switch (vType) {

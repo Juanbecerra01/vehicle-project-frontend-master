@@ -166,7 +166,7 @@ export class VehicleEditComponent implements OnInit, CanComponentDeactivate {
           sedan.description = this.vehicleForm.value['description'];
           break;
       }
-      await this.http.updatePost(sedan);
+      await this.http.updatePost(sedan, this.vehicleService.loginUser.token);
     }else {
       let vehicle: SedanPost;
       switch (vType) {
@@ -217,7 +217,7 @@ export class VehicleEditComponent implements OnInit, CanComponentDeactivate {
           break;
       }
       console.log(vehicle);
-      await this.http.createPost(vehicle);
+      await this.http.createPost(vehicle, this.vehicleService.loginUser.token);
     }
     this.vehicleService.getVehiclesRest();
     await this.router.navigate(['../'], {relativeTo: this.route});

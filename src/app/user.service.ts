@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHandler, HttpHeaders} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Observable, BehaviorSubject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +8,7 @@ import {Observable} from 'rxjs';
 export class UserService {
 
   private static url = 'http://localhost:8080/';
+  token = new BehaviorSubject<string>(null);
   constructor(private http: HttpClient) { }
 
   login(){}

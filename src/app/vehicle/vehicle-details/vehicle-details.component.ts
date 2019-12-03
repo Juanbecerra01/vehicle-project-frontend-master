@@ -34,7 +34,9 @@ export class VehicleDetailsComponent implements OnInit {
   }
 
   async onDelete(){
-    await this.postService.deletePost(this.vehicle.id);
+    await this.postService.deletePost(this.vehicle.id, this.vehicleService.loginUser.token);
+    console.log(this.vehicle.id);
+    console.log(this.vehicleService.loginUser.token);
     this.vehicleService.getVehiclesRest();
     await this.router.navigate(['/vehicles']);
   }
